@@ -40,15 +40,12 @@ public class AuthController {
 		while(true) {
 			System.out.println("사용자이름 : ");
 			username = scanner.nextLine();
-			try {
-				if(!authService.checkUsername(username)) {
-					break;
-				}else {
-					System.out.println("이미 존재하는 사용자 이름입니다.");
+			CMRespDto<String> response = (CMRespDto<String>) checkUsername(username);	
+			if(response.getCode() > 0) {
+				System.out.println(response.getMsg());	
+				break;
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			
 		}
 		
 		System.out.println("비밀번호 : ");
@@ -66,8 +63,17 @@ public class AuthController {
 	}
 	
 	//아이디 중복 체크
-	public CMRespDto<?> checkUsername() {
-		return new CMRespDto<>(1, "사용가능한 아이디", "junil");
+	private CMRespDto<?> checkUsername(String username) {
+		try {
+			if(authService.checkUsername(username)) {
+				return new CMRespDto<>(-1, "이미 존재하는 사용자이름", username);
+			}else {
+				return new CMRespDto<>(1, "사용가능한 사용자이름", username);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new CMRespDto<>(-1, "서비스 오류", username);
 		
 	}
 	
