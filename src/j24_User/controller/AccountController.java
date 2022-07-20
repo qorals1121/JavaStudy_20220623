@@ -8,5 +8,4 @@ public class AccountController {
 		
 		return new CMRespDto<>(1, "마이페이지 로드 성공", null);
 	}
-
 }

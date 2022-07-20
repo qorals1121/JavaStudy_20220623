@@ -20,6 +20,7 @@ public class SignupDto {
 				.password(password)
 				.build();
 	}
-	
-	
 }
+
+
+

@@ -14,7 +14,13 @@ public class PrincipalUser {
 	public static PrincipalUser getInstance() {
 		if(instance == null) {
 			instance = new PrincipalUser();
-			}
+		}
 		return instance;
 	}
 }
+
+
+
+
+
+

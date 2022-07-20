@@ -5,12 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import db.DBConnectionMgr;
-import j22_예외.ExceptionTest;
 
-public class UserRepsitory {
+public class UserRepository {
 	private DBConnectionMgr pool;
 	
-	public UserRepsitory() {
+	public UserRepository() {
 		pool = DBConnectionMgr.getInstance();
 	}
 	
@@ -26,7 +25,7 @@ public class UserRepsitory {
 			sql = "select * from user_mst where username = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, username);
-			rs = pstmt.executeQuery(); // ResultSet이 return된다
+			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				user = User.builder()
 						.usercode(rs.getInt(1))
@@ -37,36 +36,43 @@ public class UserRepsitory {
 						.build();
 			}
 			
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			pool.freeConnection(con, pstmt, rs);
 		}
 		
 		return user;
 	}
+	
+	public int save(User user) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
 		
-		
-		public int save(User user) {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			int result = 0;
-			
-			try {
+		try {
 			con = pool.getConnection();
 			String sql = "insert into user_mst values(0, ?, ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, user.getName());
-			pstmt.setString(1, user.getEmail());
-			pstmt.setString(1, user.getUsername());
-			pstmt.setString(1, user.getPassword());
+			pstmt.setString(2, user.getEmail());
+			pstmt.setString(3, user.getUsername());
+			pstmt.setString(4, user.getPassword());
 			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
 		
-			}catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				pool.freeConnection(con, pstmt);
-			}
-			return result;
+		return result;
 	}
 }
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@ package j24_User.controller;
 
 import java.util.Scanner;
 
-import j19_제네릭.CMRespDto;
+import j24_User.controller.dto.CMRespDto;
 import j24_User.controller.dto.SigninDto;
 import j24_User.controller.dto.SignupDto;
 import j24_User.service.AuthService;
@@ -17,8 +17,8 @@ public class AuthController {
 	
 	@NonNull
 	private final AuthService authService;
-
-	// 회원가입
+	
+	//회원가입
 	public CMRespDto<?> signup() {
 		int result = 0;
 		SignupDto signupDto = signupView();
@@ -26,11 +26,12 @@ public class AuthController {
 		try {
 			result = authService.createUser(signupDto);
 			if(result < 1) {
-				return new CMRespDto<>(1, "회원가입 실패", null);
+				return new CMRespDto<>(-1, "회원가입 실패", null);
 			}
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return new CMRespDto<>(1, "회원가입 성공", signupDto);
 	}
 	
@@ -39,27 +40,27 @@ public class AuthController {
 		String email = null;
 		String username = null;
 		String password = null;
-		System.out.println("[회원가입]");
 		
-		System.out.println("이름 : ");
+		System.out.println("[ 회원가입 ]");
+		
+		System.out.print("이름:");
 		name = scanner.nextLine();
 		
-		System.out.println("이메일 : ");
+		System.out.print("이메일:");
 		email = scanner.nextLine();
 		
-	
 		while(true) {
-			System.out.println("사용자이름 : ");
+			System.out.print("사용자이름:");
 			username = scanner.nextLine();
-			CMRespDto<String> response = (CMRespDto<String>) checkUsername(username);	
-			if(response.getCode() > 0) {
-				System.out.println(response.getMsg());	
-				break;
-				}
+			CMRespDto<String> response = (CMRespDto<String>) checkUsername(username);
 			
+			System.out.println(response.getMsg());
+			if(response.getCode() > 0) {
+				break;
+			}
 		}
 		
-		System.out.println("비밀번호 : ");
+		System.out.print("비밀번호:");
 		password = scanner.nextLine();
 		
 		SignupDto signupDto = SignupDto.builder()
@@ -70,19 +71,21 @@ public class AuthController {
 				.build();
 		
 		return signupDto;
-		
 	}
 	
-	// 로그인
+	
+	
+	
+	//로그인
 	public CMRespDto<?> signin() {
 		String username = null;
 		String password = null;
 		
 		System.out.println("[ 로그인 ]");
-		System.out.print("아이디 : ");
+		System.out.print("아이디: ");
 		username = scanner.nextLine();
 		
-		System.out.print("비밀번호 : ");
+		System.out.print("비밀번호: ");
 		password = scanner.nextLine();
 		
 		SigninDto signinDto = null;
@@ -113,7 +116,12 @@ public class AuthController {
 			e.printStackTrace();
 		}
 		return new CMRespDto<>(-1, "서비스 오류", username);
-		
 	}
-	
+
 }
+
+
+
+
+
+

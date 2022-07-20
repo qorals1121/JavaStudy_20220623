@@ -11,14 +11,4 @@ public class SigninDto {
 	private String email;
 	private String username;
 	private String password;
-	
-	public SigninDto toDto() {
-		return SigninDto.builder()
-				.usercode(usercode)
-				.name(name)
-				.email(email)
-				.username(username)
-				.password(password)
-				.build();
-	}
 }
