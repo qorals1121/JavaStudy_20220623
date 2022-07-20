@@ -4,12 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor // 기본생성자
-@AllArgsConstructor // 전체생성자
+@NoArgsConstructor
+@AllArgsConstructor
 //@Getter
 //@Setter
 //@EqualsAndHashCode
@@ -21,12 +21,10 @@ public class User {
 	private String password;
 	private String name;
 	private String email;
-	
-	//기본생성자
-	//전체생성자
-	//getter&setter
-	//hashCode
-	//equals
-	//toString
-
+	// 기본생성자
+	// 전체생성자
+	// getter&setter
+	// hashCode
+	// equals
+	// toString
 }

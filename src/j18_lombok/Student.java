@@ -9,5 +9,4 @@ public class Student {
 	private int student_code;
 	private String student_name;
 	private String student_address;
-
 }
