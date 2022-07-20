@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import db.DBConnectionMgr;
+import j22_예외.ExceptionTest;
 
 public class UserRepsitory {
 	private DBConnectionMgr pool;
@@ -43,6 +44,29 @@ public class UserRepsitory {
 		}
 		
 		return user;
+	}
 		
+		
+		public int save(User user) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			try {
+			con = pool.getConnection();
+			String sql = "insert into user_mst values(0, ?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, user.getName());
+			pstmt.setString(1, user.getEmail());
+			pstmt.setString(1, user.getUsername());
+			pstmt.setString(1, user.getPassword());
+			result = pstmt.executeUpdate();
+		
+			}catch (Exception e) {
+				e.printStackTrace();
+			}finally {
+				pool.freeConnection(con, pstmt);
+			}
+			return result;
 	}
 }

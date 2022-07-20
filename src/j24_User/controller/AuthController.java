@@ -3,6 +3,7 @@ package j24_User.controller;
 import java.util.Scanner;
 
 import j19_제네릭.CMRespDto;
+import j24_User.controller.dto.SigninDto;
 import j24_User.controller.dto.SignupDto;
 import j24_User.service.AuthService;
 import lombok.NonNull;
@@ -19,8 +20,18 @@ public class AuthController {
 
 	// 회원가입
 	public CMRespDto<?> signup() {
-		signupView();
-		return null;
+		int result = 0;
+		SignupDto signupDto = signupView();
+		
+		try {
+			result = authService.createUser(signupDto);
+			if(result < 1) {
+				return new CMRespDto<>(1, "회원가입 실패", null);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new CMRespDto<>(1, "회원가입 성공", signupDto);
 	}
 	
 	private SignupDto signupView() {
@@ -51,15 +62,43 @@ public class AuthController {
 		System.out.println("비밀번호 : ");
 		password = scanner.nextLine();
 		
-		System.out.println("회원가입 진행");
+		SignupDto signupDto = SignupDto.builder()
+				.name(name)
+				.email(email)
+				.username(username)
+				.password(password)
+				.build();
 		
-		return null;
+		return signupDto;
 		
 	}
 	
 	// 로그인
 	public CMRespDto<?> signin() {
-		return null;
+		String username = null;
+		String password = null;
+		
+		System.out.println("[ 로그인 ]");
+		System.out.print("아이디 : ");
+		username = scanner.nextLine();
+		
+		System.out.print("비밀번호 : ");
+		password = scanner.nextLine();
+		
+		SigninDto signinDto = null;
+		
+		try {
+			signinDto = authService.login(username, password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(signinDto == null) {
+			return new CMRespDto<>(-1, "로그인 실패.\n회원정보를 다시 확인하세요.", signinDto);
+		}
+		
+		return new CMRespDto<>(1, "로그인 성공.\n" 
+				+ signinDto.getName() + "님 환영합니다.", signinDto);
 	}
 	
 	//아이디 중복 체크

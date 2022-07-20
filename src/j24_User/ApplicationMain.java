@@ -3,7 +3,10 @@ package j24_User;
 import java.util.Scanner;
 
 import j24_User.controller.AuthController;
+import j24_User.controller.dto.CMRespDto;
+import j24_User.controller.dto.SigninDto;
 import j24_User.service.AuthServiceImpl;
+import j24_User.session.PrincipalUser;
 
 public class ApplicationMain {
 	private AuthController authController;
@@ -25,11 +28,19 @@ public class ApplicationMain {
 				mainMenu();
 				String select = selectMenu();
 				if(select.equals("1")) {
-					authController.signin();
+					CMRespDto<?> cmRespDto = authController.signin();
+					showResponse(cmRespDto);
+					if(cmRespDto.getCode() == 1) {
+						PrincipalUser principalUser = PrincipalUser.getInstance();
+						principalUser.setUser((SigninDto) cmRespDto.getData());
+						myPageLoad();
+					}
+					
+					// System.out.println("로그인 중인 사용자 : " + PrincipalUser.getInstance().getUser());
 					
 				}else if(select.equals("2")) {
 					authController.signup();
-					
+					showResponse(authController.signup());
 				}else if(select.equals("q")) {
 					System.out.println("프로그램 종료중...");
 					for(int i = 0; i < 100; i++) {
@@ -63,5 +74,38 @@ public class ApplicationMain {
 		private String selectMenu() {
 			System.out.print("선택 : ");
 			return scanner.nextLine();
+
+		}
+
+		private void showResponse(CMRespDto<?> cmRespDto) {
+			System.out.println("응답코드 : " + cmRespDto.getCode());
+			System.out.println("응답메세지: " + cmRespDto.getMsg());
+			System.out.println("응답데이터 : " + cmRespDto.getData());
+		}
+		
+		private void myPageLoad() {
+			PrincipalUser principalUser = PrincipalUser.getInstance();
+			
+			while(true) {
+				String select =null;
+				System.out.println("\n\n\n\n\n");
+				System.out.println("[" + principalUser.getUser().getName() + "의 마이페이지 ]");
+				System.out.println("1. 회원정보 수정");
+				System.out.println("2. 비밀번호 수정");
+				System.out.println("3. 회원탈퇴");
+				System.out.println("l. 로그아웃");
+				select = selectMenu();
+				
+				if(select.equals("1")) {
+					
+				}else if(select.equals("2")) {
+					break;
+				}else if(select.equals("l")) {
+					principalUser.setUser(null);
+					break;
+				} else {
+					System.out.println("다시 선택하세요.");
+				}
+			}
 		}
 }
