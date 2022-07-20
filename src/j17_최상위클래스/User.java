@@ -13,7 +13,33 @@ public class User {
 
 public User() {
 	}
+
+
+	public User(int usercode, String username) {
+		super();
+		this.usercode = usercode;
+		this.username = username;
+	}
 	
+	public int getUsercode() {
+		return usercode;
+	}
+
+
+	public void setUsercode(int usercode) {
+		this.usercode = usercode;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+/*
 	@Override
 	public int hashCode() { // 값을 가지고 만들어진 코드값을 비교
 		return Objects.hash(usercode, username);
@@ -38,6 +64,7 @@ public User() {
 		return usercode == user.usercode && Objects.equals(username, user.username); // 서로의 문자열을 비교할 때 사용
 		
 	}
+	*/
 
 	@Override //공통된 메소드를 오버라이드해 나만의 메소드로 만들어 사용한다.
 	public String toString() {
@@ -63,31 +90,8 @@ public User() {
 		return usercode == other.usercode && Objects.equals(username, other.username);
 	}
 
-	public int getUsercode() {
-		return usercode;
-	}
 
 
-	public void setUsercode(int usercode) {
-		this.usercode = usercode;
-	}
-
-
-	public String getUsername() {
-		return username;
-	}
-
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
-	public User(int usercode, String username) {
-		super();
-		this.usercode = usercode;
-		this.username = username;
-	}
 	
 	
 
