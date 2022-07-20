@@ -7,6 +7,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/jinil/mingyeong/workspace/JavaStudy_20220623_mingyeong/lib/lombok.jar"/>
-	<classpathentry kind="lib" path="C:/jinil/mingyeong/workspace/JavaStudy_20220623_mingyeong/lib/mariadb-java-client-2.7.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
