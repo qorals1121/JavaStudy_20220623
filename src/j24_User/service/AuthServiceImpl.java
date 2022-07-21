@@ -1,9 +1,12 @@
 package j24_User.service;
 
+import java.util.List;
+
 import j24_User.controller.dto.SigninDto;
 import j24_User.controller.dto.SignupDto;
 import j24_User.repository.User;
 import j24_User.repository.UserRepository;
+import j24_User.session.PrincipalUser;
 
 public class AuthServiceImpl implements AuthService {
 	
@@ -39,6 +42,23 @@ public class AuthServiceImpl implements AuthService {
 		}
 	}
 	
+	@Override
+	public boolean deleteUser() throws Exception {
+		int usercode = PrincipalUser.getInstance().getUser().getUsercode();
+		int result = userRepository.remove(0);
+		return result > 0; 
+	}
+	
+	@Override
+	public List<User> getUserList() throws Exception {
+		return userRepository.getUserList();
+	
+	}
+	@Override
+	public boolean modifyPassword(String password) throws Exception {
+		int usercode = PrincipalUser.getInstance().getUser().getUsercode();
+		return userRepository.updatePassword(usercode, password) > 0;
+	}
 }
 
 
