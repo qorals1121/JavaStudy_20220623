@@ -43,7 +43,7 @@ public class DBTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
-			pool.freeConnection(con, pstmt)
+			pool.freeConnection(con, pstmt);
 		}
 
 	}
