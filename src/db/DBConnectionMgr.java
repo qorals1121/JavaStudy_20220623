@@ -61,7 +61,7 @@ public class DBConnectionMgr {
             synchronized (DBConnectionMgr.class) {
                 if (instance == null) {
                     instance = new DBConnectionMgr();
-                }
+                    }
             }
         }
 
